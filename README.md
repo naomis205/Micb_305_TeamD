@@ -1,6 +1,6 @@
 # Meeting Minutes
 
-#### October 8, 2025 ####
+## October 8, 2025
 
 Agenda:
 * Roundtable for Project Ideas
