@@ -2,7 +2,13 @@
 
 #### October 8, 2025 ####
 
-Project Ideas:
+Agenda:
+* Roundtable for Project Ideas
+  *
+* Final Project Decision(s)
+  *
+  
+Action Items:
 * 
 
 ## October 1, 2025
