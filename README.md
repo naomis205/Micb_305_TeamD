@@ -1,5 +1,10 @@
 # Meeting Minutes
 
+#### October 8, 2025 ####
+
+Project Ideas:
+* 
+
 ## October 1, 2025
 
 Interest in MS, Parkinson's, and Gastic Cancer metadata
