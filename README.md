@@ -33,16 +33,19 @@ editor_options:
         -   Comparison b/tw Yu and Wang gastric cancer studies
             -   Datasets ambiguous
 -   **Final Project Decision:**
-    -   MS dataset -\> download from server, NOT Canvas (\~850 sample
+    -   MS dataset -\> download from server, NOT Canvas (\~900 sample
         size)
     -   **Research Project:** Dietary restriction (specifically lactose
         intolerance)
 
 **Action Items**:
 
--   Conduct background research
+-   Conduct background research & draft a hypothesis
 
--   Draft a hypothesis
+-   Summarize sample numbers in cohorts (lactose vs. non-lactose
+    intolerant; MS vs. healthy controls; types of MS)
+
+-   If time: Start processing data -\> refer to Modules
 
 ## October 1, 2025
 
