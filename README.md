@@ -6,6 +6,20 @@ editor_options:
 
 # Meeting Minutes
 
+## October 15, 2025
+**Agenda:**
+
+- Background reading and hypotheses formation discussion
+  - Informative evidence type for dietary restrictions related to MS
+
+- MS Dataset
+  - Sample size (total ~ 900)
+    - filtered for MS and HC with lactose intolerance
+  - Downstream analysis
+  
+**Action Items**:
+
+
 ## October 8, 2025
 
 **Agenda:**
