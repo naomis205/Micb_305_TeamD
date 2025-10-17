@@ -15,10 +15,38 @@ editor_options:
 - MS Dataset
   - Sample size (total ~ 900)
     - filtered for MS and HC with lactose intolerance
-  - Downstream analysis
+      - HC with LI only = 19
+      - MS with LI only = 19
+      - Could proceed with downstream analysis, but considered a limitation
+      
+  - Functional analysis example:
+    - In HC, function of bacteria is eg. to digest lactose
+    - Then, compare the MS (LT) and HC (LT) individuals to see if this bacteria is further depleted/missing in MS individuals
+    
+  - Background research and hypothesis formation paths:
+    - background research: lactose intolerance affects the gut microbiome
+    - background research: MS affects the gut microbiome
+    - hypothesis: therefore, significance between LT and MS gut microbiome diversity
+    
+  - Significance (proposal):
+    -  We see LT quite often, therefore, examining LT, could have implications on other dietary restrictions
+      - Implications include: lifestyles to accomodate for MS, what considerations to make/lookout etc. 
+    - If LT results are different from no-LT in MS, and we know Caucasians have more dairy in diet, therefore??
+    - If cannot determine significance, just write 1-2 sentences on why we are interested
+    
+  - Downstream analysis:
+    -   If overall no difference: calculate the percent of LT in HC and MS populations,
+        see if MS has a higher %, then suggest for further study
+    
+- Goals this week/next week:
+  - Determine hypothesis
   
 **Action Items**:
-
+- Write a detailed experimental aim:
+  - What type of analysis will we do?
+  - How does this analysis contribute to our hypothesis?
+- Importing the data and completing QIIME
+- **NOTE**: Proposal: Overall RQ, Hypothesis + justification of hypothesis
 
 ## October 8, 2025
 
