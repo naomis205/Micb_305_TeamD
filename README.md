@@ -52,6 +52,8 @@ editor_options:
     - Aim 2 examines if Aim 1 results are consistent with MS individuals
     - Aim 3 is an extension of Aim 1 and 2, focus on an analysis most important based on results from Aims 1 and 2
     - Aim 1 and 2 changed to focus on diversity, composition, and function.
+    - propose the types of analyses to do in Aims -> will be indicative of the aspects we're interested in
+    - 
   
 ## October 15, 2025
 **Agenda:**
