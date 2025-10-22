@@ -6,6 +6,13 @@ editor_options:
 
 # Meeting Minutes
 
+## October 22, 2025
+**Agenda:**
+
+- Discuss project proposal
+- Align aims with expected outcomes
+- Improve understanding of expected outcomes
+  
 ## October 15, 2025
 **Agenda:**
 
