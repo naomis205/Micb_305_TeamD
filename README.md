@@ -6,6 +6,18 @@ editor_options:
 
 # Meeting Minutes
 
+## October 29, 2025
+**Agenda:**
+- Review draft project proposal and high-level feedback
+
+- Main point of discussion:
+  - Hypothesis formation and rationale approach
+  
+- Sub point of discussion:
+  - Alpha/beta diversity past literature findings individually/across disease + LI/no LI
+  - Core microbiome (statistical analysis)
+
+
 ## October 22, 2025
 **Agenda:**
 
