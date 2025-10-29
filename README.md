@@ -47,7 +47,7 @@ editor_options:
     -   Generate rarefaction curve in QIIME2 (removed mitochondrial &
         chloroplast sequences, train classifier)
 
-***Other Questions (see comments in Google Doc)***
+***Other Questions***
 
 -   Alpha/beta diversity past literature findings individually/across
     disease + LI/no LI
