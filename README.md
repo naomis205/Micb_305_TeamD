@@ -11,6 +11,29 @@ editor_options:
 **Agenda:**
 
 -   Discuss next step analyses
+-   Map out the timeline
+
+**Minutes:**
+
+-   Meeting next week: Nov. 12 at 9:00-10:00AM
+-   Dec 1 - Week of Presentations
+-   Presentation:
+    -   Have preliminary analyses mostly done
+    -   Week of 19th, all 3 results done, so we can talk about how to
+        present it
+    -   Not all analyses to be performed on all groups –\> go through
+        aims –\> discuss potential for not repeating all analyses on all
+        groups
+-   Github organization
+    -   QIIME2 folder - Metadata, outputs
+    -   R folder - R script for each analysis
+
+**Action Items:**
+
+-   Tasks split for AIM 1: Due Nov. 11 (before meeting on Nov. 12th)
+    -   Taxa bar plot, alpha, beta - Yoshier
+    -   Core microbiome, indicator species - Kaitlyn
+    -   Phyloseq object, Functional, PICRUSt2 - Naomi
 
 ## October 29, 2025
 
