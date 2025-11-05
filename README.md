@@ -6,6 +6,12 @@ editor_options:
 
 # Meeting Minutes
 
+## November 5, 2025
+
+**Agenda:**
+
+-   Discuss next step analyses
+
 ## October 29, 2025
 
 **Agenda:** - Review draft project proposal and high-level feedback
