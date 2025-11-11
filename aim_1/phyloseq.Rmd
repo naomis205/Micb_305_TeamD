@@ -3,3 +3,88 @@ title: "phyloseq"
 output: html_document
 ---
 
+```{r Loading Packages}
+
+# install.packages("BiocManager")
+# BiocManager::install("phyloseq")
+
+library(tidyverse)
+library(phyloseq)
+```
+
+```{r Loading Data}
+
+### Formatting data for phyloseq object ###
+
+taxonomy <- read.delim("../datasets/qiime2_outputs/taxonomy.tsv",
+                       sep = "\t",
+                       row.names = 1)
+
+tree <- read_tree("../datasets/qiime2_outputs/tree.nwk")
+
+counts <- read.delim("../datasets/qiime2_outputs/feature-table.tsv",
+                     sep = "\t",
+                     skip = 1,
+                     row.names = 1)
+
+metadata <- read.delim("../datasets/corrected_ms_metadata.tsv",
+                       sep = "\t",
+                       row.names = 1)
+
+```
+
+```{r Wrangling Data}
+
+### Taxonomy ###
+
+taxonomy_formatted <- taxonomy %>%
+  separate(col = Taxon,
+           into = c("Domain", "Phylum", "Class", "Order", "Family",
+                    "Genus", "Species"),
+           sep = ";",
+           fill = "right") %>%
+  select(-Confidence) %>%
+  as.matrix()
+
+# write.csv(taxonomy_formatted, "../datasets/taxonomy_formatted.csv")
+
+### Counts ###
+
+# R loaded in the column names with "X" precending the sample names
+# This code removes the "X" and replaces it with nothing. This is allow phyloseq
+# to match sample names here with those in the metadata.
+
+counts_col_names <- names(counts)
+
+counts_names_formatted <- counts_col_names %>%
+  sapply(str_replace, pattern = "X", replacement = "")
+
+counts_formatted <- counts %>% `colnames<-`(counts_names_formatted) %>% as.matrix()
+
+# write.csv(counts_formatted, "../datasets/counts_formatted.csv")
+
+### Metadata ###
+
+# R did not replace the "-" in sample names with "." when creating row names
+# This code removes the "-" and replaces it with ".". This is allow phyloseq
+# to match sample names here with those in the count data.
+
+md_row_names <- row.names(metadata)
+
+md_names_formatted <- md_row_names %>%
+  sapply(str_replace, pattern = "-", replacement = ".")
+
+metadata_formatted <- metadata %>% `rownames<-`(md_names_formatted)
+
+# write.csv(metadata_formatted, "../datasets/metadata_formatted.csv")
+```
+
+```{r Generating Phyloseq Object}
+
+ps <- phyloseq(sample_data(metadata_formatted),
+               otu_table(counts_formatted, taxa_are_rows = T),
+               tax_table(taxonomy_formatted),
+               tree)
+
+# saveRDS(ps, "../datasets/ps_taxonomy.rds")
+```
