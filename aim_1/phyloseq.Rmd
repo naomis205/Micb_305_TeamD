@@ -3,6 +3,8 @@ title: "phyloseq"
 output: html_document
 ---
 
+In order to access the data used in the following code, the folders "qiime2_outputs", and "picrust2_outputs" within the datasets folder (located in the root directory) need to be unzipped.
+
 ```{r Loading Packages}
 
 # install.packages("BiocManager")
