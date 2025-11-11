@@ -1,0 +1,81 @@
+---
+title: "Taxonomic_bar_plot"
+output: html_document
+date: "2025-11-11"
+---
+
+```{r Load data and libraries}
+library(tidyverse)
+library(dplyr)
+library(phyloseq)
+
+# Load object
+ps = readRDS('../datasets/ps_taxonomy.rds')
+
+# Filter for healthy controls
+ps_control = subset_samples(ps, disease == "Control")
+
+# Make a phylum-level plot
+ps_phylum = tax_glom(ps_control,'Phylum')
+
+# Transform to relative abundance and melt for ggplot
+rel_ab <- ps_phylum %>%
+  microbiome::transform("compositional") %>%
+  psmelt()
+
+```
+
+```{r taxonomic bar plot}
+# Calculate total and average abundance per phylum
+sum_of_each_phylum = taxa_sums(ps_phylum)
+avg_of_each_phylum = sum_of_each_phylum/sum(sum_of_each_phylum)
+
+# Find which ones are <1%
+below_1 = avg_of_each_phylum[avg_of_each_phylum<0.01]
+to_change = names(below_1)
+to_change
+
+# Now we'll change the phylum name of these ones to '<1%'
+rel_ab_modified = rel_ab
+unique(rel_ab_modified$Phylum)
+rel_ab_modified$Phylum[rel_ab_modified$OTU %in% to_change] = '<1%'
+unique(rel_ab_modified$Phylum)
+
+# Now let's plot it again!
+plot_abfilt = rel_ab_modified %>%
+  ggplot(aes(Sample,Abundance,fill=Phylum)) +
+  geom_col(position='stack') +
+  facet_wrap(~LI_status, ncol = 2, scales = 'free') +
+  theme_classic(base_size=18) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  xlab(NULL)
+plot_abfilt
+
+```
+
+```{r grouped taxonomic bar plot}
+# Find the average abundance for each phylum within each body site
+averaged = rel_ab %>% 
+  group_by(OTU,Phylum,LI_status) %>% 
+  summarize(Abundance = mean(Abundance)) %>% 
+  ungroup()
+
+# Combine those under 1% 
+avg_modified = averaged
+avg_modified$Phylum[avg_modified$OTU %in% to_change] = '<1%'
+
+# Plot it out
+plot_avg = avg_modified %>% 
+  ggplot(aes(LI_status,Abundance,fill=Phylum)) +
+  geom_col(position='stack') +
+  theme_classic(base_size=18) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  xlab(NULL)
+plot_avg
+
+# Saving plot
+ggsave('Aim 1 - Grouped Bar Plots.jpeg',
+       plot = plot_avg,
+       height=8, width = 6)
+
+```
