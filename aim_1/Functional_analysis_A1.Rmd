@@ -3,3 +3,144 @@ title: "Functional_analysis_A1"
 output: html_document
 ---
 
+# Functional Analysis - Aim 1
+
+## HNDR vs. HLI
+
+This code performs functional analysis using ggpicrust2 between the groups HNDR and HLI.
+
+In order to access the data used in the following code, the folders "qiime2_outputs", and "picrust2_outputs" within the datasets folder (located in the root directory) need to be unzipped.
+
+```{r Loading Libraries}
+
+# install.packages("devtools")
+# devtools::install_github("cafferychen777/ggpicrust2")
+# install.packages('MicrobiomeStat')
+# BiocManager::install("KEGGREST")
+# install.packages("GGally")
+# install.packages("pheatmap")
+
+library(tidyverse)
+library(phyloseq)
+library(ggpicrust2)
+library(pheatmap)
+
+```
+
+```{r Loading Data}
+
+ps <- readRDS("../datasets/ps_taxonomy.rds")
+
+metadata_formatted <- ps@sam_data %>% data.frame() %>% rownames_to_column("sample_name")
+
+ko <- read.delim("../datasets/picrust2_outputs/pred_metagenome_unstrat.tsv",
+                 row.names = 1)
+
+```
+
+```{r Wrangling}
+
+### Metadata ###
+
+# Filtering for healthy controls with either no dietary restrictions, or with
+# ...lactose intolerance only
+
+md_HNDR_HLI <- metadata_formatted %>%
+  filter(disease == "Control")
+
+# write.csv(md_HNDR_HLI, "../datasets/md_HNDR_HLI.csv")
+
+### KO ###
+
+ko_col_names <- colnames(ko)
+
+ko_names_formatted <- ko_col_names %>%
+  sapply(str_replace, pattern = "X", replacement = "")
+
+ko_formatted <- `colnames<-`(ko, ko_names_formatted)
+
+
+ko_HNDR_HLI <- ko_formatted %>% select(all_of(md_HNDR_HLI$sample_name))
+
+```
+
+```{r Pathway Differential Abundance Analysis (DAA)}
+
+daa_results_df = pathway_daa(abundance = ko_HNDR_HLI,
+                             metadata = md_HNDR_HLI, 
+                             group = "LI_status", 
+                             daa_method = "LinDA", 
+                             select = NULL, reference = NULL)
+
+daa_annotated_results_df = pathway_annotation(pathway = "KO",
+                                              daa_results_df = daa_results_df,
+                                              ko_to_kegg = TRUE)
+
+
+# saveRDS(daa_annotated_results_df,'daa_annotated_results_df.rds')
+daa_annotated_results_df = readRDS('daa_annotated_results_df.rds')
+
+daa_annotated_results_df %>% filter(p_adjust< 0.17) %>% nrow()
+
+```
+
+### Notes:
+
+There were insignificant differences between HNDR and HLI in terms of functional pathways. Because of this, they could be not be annotated, and no pathway error bar plot could be generated.
+
+```{r PCA Plot(s)}
+
+pca_HNDR_HLI <- pathway_pca(abundance = ko_HNDR_HLI,
+                            metadata = md_HNDR_HLI, 
+                            group = "LI_status")
+
+pca_HNDR_HLI
+
+# ggsave("pca_HNDR_HLI.png", plot = pca_HNDR_HLI)
+
+```
+
+```{r Heatmap}
+
+sig_features = daa_annotated_results_df %>% 
+  filter(p_adjust < 0.17) %>% 
+  pull('feature') %>% unique()
+
+ko_relab = ko_HNDR_HLI %>% 
+  apply(2,function(x) x/sum(x)) %>% as.data.frame()
+# colSums(ko_relab)
+
+
+stats = ko_relab %>% t() %>% 
+  as.data.frame() %>% 
+  select(all_of(sig_features)) %>%
+  cor(method = 'pearson')
+
+
+color_palette <- colorRampPalette(c("blue", "white", "red"))(40)
+
+
+breaks <- seq(-1, 1, length.out = 41)  
+
+
+pheatmap(stats, 
+         clustering_distance_rows = "euclidean",  
+         clustering_distance_cols = "euclidean", 
+         clustering_method = "complete",          
+         color = color_palette, 
+         breaks = breaks,
+         main = '',
+         fontsize_row = 10, 
+         fontsize_col = 10,
+         filename = "KEGG_Heatmap_A1.png",
+         height= 9, width = 9)
+
+```
+
+### Results:
+
+-   There are no significant pathways below p-adjusted = 0.07
+
+-   For the purposes of generating a heatmap, DAA annotations with a p-adjusted ≤ 0.17 were retained
+
+-   No functional differences were observed between HNDR and HLI
