@@ -1,0 +1,16 @@
+The raw picrust2 and qiime2 datasets are too large to be pushed to GitHub.
+You can unzip the compressed folders from /datasets. If you move the unzipped
+folders elsewhere in the repo, please change the file path(s) indicated 
+in the .gitignore file (root directory). Otherwise, you might run into a problem like the
+author of this message did.
+
+Contents:
+- picrust2_outputs.zip: combined_EC_predicted.tsv, combined_KO_predicted.tsv,
+  path_abun_unstrat.tsv
+- qiime2_outputs.zip: taxonomy.tsv, feature-table.tsv, tree.nwk
+
+--------
+- metadata_formatted.csv, counts_formatted.csv, and taxonomy_formatted.csv were
+  generated within phyloseq.Rmd. They were saved within the repo for your
+  convenience. The original datasets had some issues when they were loaded into
+  R. (Or you could use ps_taxonomy.rds to access the data)
