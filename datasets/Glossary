@@ -1,0 +1,10 @@
+- corrected_ms_metadata.tsv -> original metadata
+- counts_formatted.csv -> formatted feature table; taxa are row names
+- Glossary -> this file
+- Important_notes -> information specific to some datasets; important to repo
+- md_HNDR_HLI.csv -> formatted metadata containing only Healthy Controls
+- metadata_formatted.csv -> formatted metadata; samples are row names
+- picrust2_outputs.zip -> see Important_notes
+- ps_taxonomy.rds -> phyloseq object created using metadata_formatted.csv
+- qiime2_outputs.zip -> see Important_notes
+- taxonomy_formatted.csv -> formatted taxonomy table; samples are row names
