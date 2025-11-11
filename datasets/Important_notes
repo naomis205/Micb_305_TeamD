@@ -6,7 +6,7 @@ author of this message did.
 
 Contents:
 - picrust2_outputs.zip: combined_EC_predicted.tsv, combined_KO_predicted.tsv,
-  path_abun_unstrat.tsv
+  path_abun_unstrat.tsv, pred_metagenome_unstrat.tsv
 - qiime2_outputs.zip: taxonomy.tsv, feature-table.tsv, tree.nwk
 
 --------
