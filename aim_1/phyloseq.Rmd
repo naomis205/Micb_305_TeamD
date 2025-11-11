@@ -76,7 +76,14 @@ md_row_names <- row.names(metadata)
 md_names_formatted <- md_row_names %>%
   sapply(str_replace, pattern = "-", replacement = ".")
 
-metadata_formatted <- metadata %>% `rownames<-`(md_names_formatted)
+metadata_formatted <- metadata %>% `rownames<-`(md_names_formatted) %>%
+  filter(diet_special_needs == "diet_lactose_intolerance"|
+           is.na(diet_special_needs)) %>%
+  mutate(LI_status = ifelse(is.na(diet_special_needs) == T,
+                replace_na("No_LI"),
+                str_replace(diet_special_needs, 
+                            "diet_lactose_intolerance", 
+                            "LI")))
 
 # write.csv(metadata_formatted, "../datasets/metadata_formatted.csv")
 ```
