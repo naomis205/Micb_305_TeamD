@@ -1,0 +1,47 @@
+---
+title: "A1_core_microbiome_analysis"
+output: html_document
+date: "2025-11-11"
+---
+
+```{r Load packages and wrangle data}
+
+# Load packages
+library(phyloseq)
+library(microbiome)
+library(ggVennDiagram)
+
+# Load object
+ps = readRDS('../datasets/ps_taxonomy.rds')
+
+# Filter for healthy controls
+ps_control = subset_samples(ps, disease == "Control")
+
+# Transform to relative abundance and apply tax_glom()
+ps_relab = transform(ps_control, 'compositional')
+ps_relab_genus = tax_glom(ps_relab, 'Genus')
+```
+
+```{r Core Microbiome Analysis}
+
+# Subset phyloseq object for HNDR and HLI groups
+ps_HNDR <- subset_samples(ps_relab_genus, is.na(diet_special_needs))
+ps_HLI <- subset_samples(ps_relab_genus, diet_special_needs == "diet_lactose_intolerance")
+
+# Perform core microbiome analysis
+HNDR_core <- core_members(ps_HNDR, detection = 0.001, prevalence = 0.85)
+HLI_core <- core_members(ps_HLI, detection = 0.001, prevalence = 0.85)
+
+# Visualize results in Venn diagram
+core_plot = ggVennDiagram(x = list(HNDR_core, HLI_core),
+                          set_size = 5, 
+                          label_alpha = 0,
+                          category.names = c('HNDR', 'HLI')
+                          ) + scale_fill_gradient(low = "#dbe9f6", high = "#4a90e2")
+core_plot
+
+# Save core microbiome plot
+ggsave('Aim 1 - Core Microbiome Plot.jpeg',
+       plot = core_plot,
+       height = 7, width = 12)
+```
