@@ -22,11 +22,11 @@ ps_relab = transform(ps_control, 'compositional')
 ps_relab_genus = tax_glom(ps_relab, 'Genus')
 ```
 
-```{r Core Microbiome Analysis}
+```{r Core Microbiome Analysis for Genus}
 
 # Subset phyloseq object for HNDR and HLI groups
-ps_HNDR <- subset_samples(ps_relab_genus, is.na(diet_special_needs))
-ps_HLI <- subset_samples(ps_relab_genus, diet_special_needs == "diet_lactose_intolerance")
+ps_HNDR <- subset_samples(ps_relab_genus, LI_status == "No_LI")
+ps_HLI <- subset_samples(ps_relab_genus, LI_status == "LI")
 
 # Perform core microbiome analysis
 HNDR_core <- core_members(ps_HNDR, detection = 0.001, prevalence = 0.85)

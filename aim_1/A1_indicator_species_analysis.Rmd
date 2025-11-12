@@ -18,14 +18,11 @@ ps = readRDS('../datasets/ps_taxonomy.rds')
 ps_control = subset_samples(ps, disease == "Control")
 
 # Transform to relative abundance and apply tax_glom()
-ps_relab = transform(ps_control, 'compositional')
+ps_relab = transform_sample_counts(ps_control, function(x) x / sum(x))
 ps_relab_genus = tax_glom(ps_relab, 'Genus')
 
 # Apply abundance filter
 ps_filt = filter_taxa(ps_relab, function(x) mean(x) > 0.001, TRUE)
-
-# Replace diet_special_needs NAs with "None" to use as grouping variable for ISA
-sample_data(ps_filt)$diet_special_needs[is.na(sample_data(ps_filt)$diet_special_needs)] = "None"
 
 # Extract OTU table
 otu_table = data.frame(otu_table(ps_filt))
@@ -36,7 +33,7 @@ otu_table = data.frame(otu_table(ps_filt))
 # Perform ISA
 set.seed(123)
 isa = multipatt(t(otu_table(ps_filt)), 
-                cluster = sample_data(ps_filt)$diet_special_needs,
+                cluster = sample_data(ps_filt)$LI_status,
                 control = how(nperm = 999)
                 )
 
@@ -46,8 +43,4 @@ isa_results = as.data.frame(isa$sign)
 # Filter ISA with indicator value > 0.7 and p-value <= 0.05
 isa_results_filt = isa_results %>%
   filter(stat > 0.7 & p.value <= 0.05)
-
-# HLI_to_plot = isa_results %>%
-#   filter(`s.diet_lactose_intolerance` == 1 & `s.None` == 0) %>%
-#   rownames()
 ```
