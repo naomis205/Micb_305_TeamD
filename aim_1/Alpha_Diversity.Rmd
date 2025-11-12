@@ -23,7 +23,7 @@ table(sample_sums(psrare_control))
 
 ```
 
-```{Alpha Diversity}
+```{r Alpha Diversity}
 # Calculate Shannon index alpha diversity
 set.seed(421)
 p = plot_richness(psrare_control, x = 'LI_status', 
@@ -53,5 +53,8 @@ p_formatted_new = p_formatted +
   stat_compare_means(comparisons = comparisons, method='wilcox.test', size=6) +
   scale_y_continuous(expand = expansion(mult = c(0.05, .1)))
 p_formatted_new
+
+# Saving plot
+ggsave('Aim 1 - Alpha Diversity.jpeg', plot = p_formatted_new, height=5,width=7)
 
 ```
