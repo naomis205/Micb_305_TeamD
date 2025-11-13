@@ -18,8 +18,16 @@ ps_control = subset_samples(ps, disease == "Control")
 # Make a phylum-level plot
 ps_phylum = tax_glom(ps_control,'Phylum')
 
-# Transform to relative abundance and melt for ggplot
+# Make a genus-level plot
+ps_genus = tax_glom(ps_control,'Genus')
+
+# Transform to relative abundance and melt for ggplot (phylum)
 rel_ab <- ps_phylum %>%
+  microbiome::transform("compositional") %>%
+  psmelt()
+
+# Transform to relative abundance and melt for ggplot (genus)
+rel_ab_genus <- ps_genus %>%
   microbiome::transform("compositional") %>%
   psmelt()
 
@@ -30,41 +38,56 @@ rel_ab <- ps_phylum %>%
 sum_of_each_phylum = taxa_sums(ps_phylum)
 avg_of_each_phylum = sum_of_each_phylum/sum(sum_of_each_phylum)
 
-# Find which ones are <1%
+# Calculate total and average abundance per genus
+sum_of_each_genus = taxa_sums(ps_genus)
+avg_of_each_genus = sum_of_each_genus/sum(sum_of_each_genus)
+
+# Find which ones are <1% (phylum)
 below_1 = avg_of_each_phylum[avg_of_each_phylum<0.01]
 to_change = names(below_1)
 to_change
 
-# Now we'll change the phylum name of these ones to '<1%'
+# Find which ones are <1% (genus)
+below_1_2 = avg_of_each_genus[avg_of_each_genus<0.01]
+to_change_2 = names(below_1_2)
+to_change_2
+
+# Change the phylum name of these ones to '<1%'
 rel_ab_modified = rel_ab
 unique(rel_ab_modified$Phylum)
 rel_ab_modified$Phylum[rel_ab_modified$OTU %in% to_change] = '<1%'
 unique(rel_ab_modified$Phylum)
 
-# Now let's plot it again!
-plot_abfilt = rel_ab_modified %>%
-  ggplot(aes(Sample,Abundance,fill=Phylum)) +
-  geom_col(position='stack') +
-  facet_wrap(~LI_status, ncol = 2, scales = 'free') +
-  theme_classic(base_size=18) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-  xlab(NULL)
-plot_abfilt
+# Change the genus name of these ones to '<1%'
+rel_ab_modified_2 = rel_ab_genus
+unique(rel_ab_modified_2$Genus)
+rel_ab_modified_2$Genus[rel_ab_modified_2$OTU %in% to_change] = '<1%'
+unique(rel_ab_modified_2$Genus)
 
 ```
 
 ```{r grouped taxonomic bar plot}
-# Find the average abundance for each phylum within each body site
+# Find the average abundance for each phylum within LI status
 averaged = rel_ab %>% 
   group_by(OTU,Phylum,LI_status) %>% 
   summarize(Abundance = mean(Abundance)) %>% 
   ungroup()
 
-# Combine those under 1% 
+# Find the average abundance for each genus within LI status
+averaged_2 = rel_ab_genus %>% 
+  group_by(OTU,Genus,LI_status) %>% 
+  summarize(Abundance = mean(Abundance)) %>% 
+  ungroup()
+
+# Combine those under 1% (phylum)
 avg_modified = averaged
 avg_modified$Phylum[avg_modified$OTU %in% to_change] = '<1%'
 
-# Plot it out
+# Combine those under 1% (genus)
+avg_modified_2 = averaged_2
+avg_modified_2$Genus[avg_modified_2$OTU %in% to_change] = '<1%'
+
+# Phylum level plot
 plot_avg = avg_modified %>% 
   ggplot(aes(LI_status,Abundance,fill=Phylum)) +
   geom_col(position='stack') +
@@ -73,9 +96,17 @@ plot_avg = avg_modified %>%
   xlab(NULL)
 plot_avg
 
+# Genus level plot
+plot_avg_2 = avg_modified_2 %>% 
+  ggplot(aes(LI_status,Abundance,fill=Genus)) +
+  geom_col(position='stack') +
+  theme_classic(base_size=18) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    legend.position = "none") +
+  xlab(NULL)
+plot_avg_2
+
 # Saving plot
-ggsave('Aim 1 - Grouped Bar Plots.jpeg',
-       plot = plot_avg,
-       height=8, width = 6)
+# ggsave('Aim 1 - Grouped Bar Plots.jpeg', plot = plot_avg, height=8, width = 6)
 
 ```
