@@ -1,7 +1,7 @@
 ---
-title: "Alpha Diversity"
+title: "A2_alpha_diversity"
 output: html_document
-date: "2025-11-11"
+date: "2025-11-14"
 ---
 
 ```{r Load data and libraries}
@@ -17,16 +17,16 @@ ps = readRDS('../datasets/ps_taxonomy.rds')
 psrare = ps %>% 
   rarefy_even_depth(sample.size = 7541, rngseed = 421)
 
-psrare_control = subset_samples(psrare, disease == "Control")
+psrare_MS = subset_samples(psrare, disease == "MS")
 
-table(sample_sums(psrare_control))
+table(sample_sums(psrare_MS))
 
 ```
 
-```{r Alpha Diversity}
+```{r r Alpha Diversity}
 # Calculate Shannon index alpha diversity
 set.seed(421)
-p = plot_richness(psrare_control, x = 'LI_status', 
+p = plot_richness(psrare_MS, x = 'LI_status', 
                   measures = c('Shannon'),
                   color = 'LI_status')
 p
@@ -35,9 +35,9 @@ p
 pdata = p$data
 str(pdata)
 
-p_formatted = pdata %>% ggplot(aes(LI_status,value,fill = LI_status)) +
+p_formatted = pdata %>% 
+  ggplot(aes(LI_status,value,fill = LI_status)) +
   geom_boxplot(outlier.shape = NA) + 
-  # geom_jitter(height=0,width=0.3) + # remove the points due to the difference in sample size
   theme_classic(base_size=12) +
   facet_wrap(~variable,ncol=2,scales = 'free_y') +
   ylab('Alpha Diversity') + 
@@ -55,6 +55,6 @@ p_formatted_new = p_formatted +
 p_formatted_new
 
 # Saving plot
-# ggsave('Aim 1 - Alpha Diversity.jpeg', plot = p_formatted_new, height=5,width=7)
+ggsave('Aim 2 - Alpha Diversity.jpeg', plot = p_formatted_new, height=5,width=7)
 
 ```
