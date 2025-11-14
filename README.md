@@ -19,36 +19,22 @@ editor_options:
     -   Heatmap
 -   Map out future analysis direction for Aims 2 and 3
 
-**Minutes:**
-- Try glomming to genus level
-- Core microbiome - done by genus -> keep it as genus
-  - test out phylum level? -> didn't work
-  - not many differences
-- keep taxa bar plot and core microbiome at the same level
-- Shannon alpha diversity
-  - perhaps don't show the separate samples as dots
-- MDS2: overlay LI dots on top of No_LI b/c there are fewer LI points than NDR
-- Beta diversity:
-  - Bray-Curtis: significance!!! :D
-    - Abundance difference across the samples
-  - Try Weighted-Unifrac
-- Functional analysis: we have NOTHING
-  - try other databases (MetaCyc, EC)
-- Conclusions:
-  - Replicated previous findings:
-    - found no alpha diversity, found beta diversity
-  - Taxa bar plot:
-  -   differences observed at phylum level
-  -   genus plot - use as supplemental data
-  - PCA:
-    - No functional differences
-  - Core microbiome:
-    - Some taxa are different between NDR and LI
-    - Indicator species: could try stat cut-off 0.6
-    -   look into what some species are... if interesting, could report?
-  - Proposal revisions:
-  -   Tracked changes
-  -   Not all commments make sense :( grrrr
+**Minutes:** - Try glomming to genus level - Core microbiome - done by
+genus -\> keep it as genus - test out phylum level? -\> didn't work -
+not many differences - keep taxa bar plot and core microbiome at the
+same level - Shannon alpha diversity - perhaps don't show the separate
+samples as dots - MDS2: overlay LI dots on top of No_LI b/c there are
+fewer LI points than NDR - Beta diversity: - Bray-Curtis:
+significance!!! :D - Abundance difference across the samples - Try
+Weighted-Unifrac - Functional analysis: we have NOTHING - try other
+databases (MetaCyc, EC) - Conclusions: - Replicated previous findings: -
+found no alpha diversity, found beta diversity - Taxa bar plot: -
+differences observed at phylum level - genus plot - use as supplemental
+data - PCA: - No functional differences - Core microbiome: - Some taxa
+are different between NDR and LI - Indicator species: could try stat
+cut-off 0.6 - look into what some species are... if interesting, could
+report? - Proposal revisions: - Tracked changes - Not all commments make
+sense :( grrrr
 
 ## November 5, 2025
 
