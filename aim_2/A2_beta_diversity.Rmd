@@ -50,9 +50,9 @@ p
 stats = adonis2(ps_bray ~ LI_status, data = mds_data)
 
 # Saving plot
-# ggsave('Aim 2 - Beta Diversity.jpeg', plot = p, height=5,width=7)
+ggsave('Aim 2 - Beta Diversity.jpeg', plot = p, height=5,width=7)
 
 # Save statistics as an Excel file
-# writexl::write_xlsx(list('Beta Diversity' = stats), 'Aim 2 - Beta Diversity Stats.xlsx')
+writexl::write_xlsx(list('Beta Diversity' = stats), 'Aim 2 - Beta Diversity Stats.xlsx')
 ```
 
