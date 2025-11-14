@@ -33,7 +33,7 @@ rel_ab_genus <- ps_genus %>%
 
 ```
 
-```{r taxonomic bar plot}
+```{r Calculating Abundance}
 # Calculate total and average abundance per phylum
 sum_of_each_phylum = taxa_sums(ps_phylum)
 avg_of_each_phylum = sum_of_each_phylum/sum(sum_of_each_phylum)
@@ -61,12 +61,12 @@ unique(rel_ab_modified$Phylum)
 # Change the genus name of these ones to '<1%'
 rel_ab_modified_2 = rel_ab_genus
 unique(rel_ab_modified_2$Genus)
-rel_ab_modified_2$Genus[rel_ab_modified_2$OTU %in% to_change] = '<1%'
+rel_ab_modified_2$Genus[rel_ab_modified_2$OTU %in% to_change_2] = '<1%'
 unique(rel_ab_modified_2$Genus)
 
 ```
 
-```{r grouped taxonomic bar plot}
+```{r Grouped Taxonomic Bar Plot}
 # Find the average abundance for each phylum within LI status
 averaged = rel_ab %>% 
   group_by(OTU,Phylum,LI_status) %>% 
@@ -85,7 +85,7 @@ avg_modified$Phylum[avg_modified$OTU %in% to_change] = '<1%'
 
 # Combine those under 1% (genus)
 avg_modified_2 = averaged_2
-avg_modified_2$Genus[avg_modified_2$OTU %in% to_change] = '<1%'
+avg_modified_2$Genus[avg_modified_2$OTU %in% to_change_2] = '<1%'
 
 # Phylum level plot
 plot_avg = avg_modified %>% 
@@ -100,7 +100,7 @@ plot_avg
 plot_avg_2 = avg_modified_2 %>% 
   ggplot(aes(LI_status,Abundance,fill=Genus)) +
   geom_col(position='stack') +
-  theme_classic(base_size=18) +
+  theme_classic(base_size=16) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
     legend.position = "none") +
   xlab(NULL)
