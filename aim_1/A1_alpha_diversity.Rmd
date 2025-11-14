@@ -1,5 +1,5 @@
 ---
-title: "Alpha Diversity"
+title: "A1_alpha_diversity"
 output: html_document
 date: "2025-11-11"
 ---
@@ -55,6 +55,6 @@ p_formatted_new = p_formatted +
 p_formatted_new
 
 # Saving plot
-# ggsave('Aim 1 - Alpha Diversity.jpeg', plot = p_formatted_new, height=5,width=7)
+ggsave('Aim 1 - Alpha Diversity.jpeg', plot = p_formatted_new, height=5,width=7)
 
 ```
