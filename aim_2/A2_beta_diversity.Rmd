@@ -1,0 +1,58 @@
+---
+title: "A2_beta_diversity"
+output: html_document
+date: "2025-11-14"
+---
+
+```{r Load data and libraries}
+library(tidyverse)
+library(phyloseq)
+library(vegan)
+
+# Load object
+ps = readRDS('../datasets/ps_taxonomy.rds')
+
+# Rarefy the data 
+psrare = ps %>% 
+  rarefy_even_depth(sample.size = 7541, rngseed = 421)
+
+# Filter for healthy controls
+ps_MS = subset_samples(psrare, disease == "MS")
+
+```
+
+```{r Calculating Beta Diversity}
+# Calculate the distance between each sample pair
+ps_bray = phyloseq::distance(ps_MS, method = "bray")
+View(as.matrix(ps_bray))
+
+# MDS scaling
+set.seed(421)
+mds = metaMDS(ps_bray)
+
+# Extract data
+mds_data = mds$points %>% as.data.frame %>%
+  merge(sample_data(ps_MS), by='row.names', sort=F)
+head(mds_data)
+
+```
+
+```{r Plotting Beta Diversity}
+# Plotting Beta Diversity plot
+p = mds_data %>%
+  ggplot(aes(MDS1,MDS2,color = LI_status)) +
+  geom_point(alpha = 0.5) +
+  stat_ellipse() +
+  theme_classic(base_size=16)
+p
+
+# PERMANOVA Statistics
+stats = adonis2(ps_bray ~ LI_status, data = mds_data)
+
+# Saving plot
+# ggsave('Aim 2 - Beta Diversity.jpeg', plot = p, height=5,width=7)
+
+# Save statistics as an Excel file
+# writexl::write_xlsx(list('Beta Diversity' = stats), 'Aim 2 - Beta Diversity Stats.xlsx')
+```
+
